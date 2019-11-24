@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Support110Media.Data.Model.FileModel>
+
+@{
+    ViewData["Title"] = "SupportIndex";
+}
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+<br />
+<center><h1>Hi! You're welcome your page.</h1></center>
+<br />
+<br />
+<table border="0" class="table" id="indexTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FileName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileUploadDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CallDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CallTime)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileUploadDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CallDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CallTime)
+                </td>
+            </tr>}
+    </tbody>
+</table>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
+<script>$('#indexTable').DataTable();</script>

@@ -1,0 +1,35 @@
+﻿﻿@{
+    ViewData["Title"] = "LoginIndex";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="~/css/login.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="input-wrapper">
+            <div class="logo-container">
+                <img src="~/images/110.png" />
+            </div>
+            <form action="/Login/LogIn" method="post">
+                <div class="login-input-wrapper">
+                    <p>Username</p>
+                    <input type="text" name="UserName" value="" placeholder="Enter your username" />
+                </div>
+                <div class="login-input-wrapper">
+                    <p>Password</p>
+                    <input type="password" name="Password" value="" />
+                </div>
+                <div class="login-button-wrapper">
+                    <input class="login-button" type="submit" name="name" value="LOGIN" />
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

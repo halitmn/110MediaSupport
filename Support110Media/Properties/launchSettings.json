@@ -1,0 +1,34 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:59046",
+      "sslPort": 44383
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "MAIL_PORT": "587",
+        "MAIL_PASSWORD": "sgkupdater123",
+        "MAIL_IP": "smtp.gmail.com",
+        "MAIL_ADDRESS": "sgkupdater@gmail.com",
+        "USER_NAME": "admin",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MAIL_HOST": "smtp",
+        "PASSWORD": "admintoor"
+      }
+    },
+    "Support110Media": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+    }
+  }
+}

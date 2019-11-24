@@ -1,0 +1,34 @@
+﻿@model Support110Media.Data.Model.UserModel
+
+@{
+    ViewData["Title"] = "UpdateUser";
+}
+
+<h2>Update User</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("UpdateUser", "User", FormMethod.Post))
+        {
+            <input id="UserId" name="UserId" type="hidden" value="@ViewBag.User.UserId">
+            <label class="control-label">User Name</label>
+            <input class="form-control" id="UserName" name="UserName" type="text" value="@ViewBag.User.UserName">
+            <label class="control-label">User Password</label>
+            <input class="form-control" id="Password" name="Password" type="text" value="@ViewBag.User.Password">
+            <label class="control-label">Mail Address</label>
+            <input class="form-control" id="MailAddress" name="MailAddress" type="text" value="@ViewBag.User.MailAddress">
+            <br />
+            <input type="submit" value="Düzenle" class="btn btn-default" />
+            <br />
+        }
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

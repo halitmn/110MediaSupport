@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Support110Media.Data.Model.CostumerModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+<script>
+    function SendMail() {
+        Swal.fire({
+
+            type: 'success',
+            title: 'Mail Sended.',
+            showConfirmButton: false,
+            timer: 1000
+        })
+    }
+
+</script>
+<h2>Costumer List</h2>
+<p>
+    <a href="~/Main/AddNewCostumer" class="btn btn-link glyphicon glyphicon-plus">Create New Costumer</a>
+</p>
+<div id="cTable">
+    <table border="0" class="topic" id="indexTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Phone Number</th>
+                <th>Addreess</th>
+                <th>Type</th>
+                <th>Mail Address</th>       
+                <th>Password</th>
+                <th>Company Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CostumerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CostumerSurname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CostumerPhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CostumerAddreess)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CostumerType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CostumerMailAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CostumerPassword)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("", "UpdateCostumer", new { id = item.CostumerId }, new { @class = "btn btn-success  btn-xs  glyphicon glyphicon-pencil" }) |
+                        @Html.ActionLink("", "DeleteCostumer", new { id = item.CostumerId }, new { @class = "btn btn-danger  btn-xs  glyphicon glyphicon-trash", onclick = "return confirm('Are you sure?')" }) |
+                        @Html.ActionLink("","SendMail",new { id=item.CostumerId}, new {@class = "btn btn-success  btn-xs glyphicon glyphicon-envelope", onclick = "return confirm('Do you want send mail?')" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
+<script>$('#indexTable').DataTable();</script>

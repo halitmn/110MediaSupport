@@ -1,0 +1,57 @@
+﻿@model Support110Media.Data.Model.FileModel
+
+@{
+    ViewData["Title"] = "AddNewFile";
+}
+
+<h2>Add New File</h2>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("AddNewFile", "File", FormMethod.Post))
+        {
+            <b> @Html.ValidationSummary("*Marked fields need to be entered !", new { @class = "text-danger" }) </b>
+            <label class="control-label">*File Name</label>
+            <div>
+                @Html.TextBoxFor(m => m.FileName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FileName, "", new { @class = "text-danger" })
+            </div>
+            <label class="control-label">*File Upload Date</label>
+            <div>
+                @Html.TextBoxFor(m => m.FileUploadDate, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FileUploadDate, "", new { @class = "text-danger" })
+            </div>
+
+            <label class="control-label">*Call Date</label>
+            <div>
+                @Html.TextBoxFor(m => m.CallDate, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CallDate, "", new { @class = "text-danger" })
+            </div>
+
+            <label class="control-label">*Call Time</label>
+            <div>
+                @Html.TextBoxFor(m => m.CallTime, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CallTime, "", new { @class = "text-danger" })
+            </div>
+
+            <label class="control-label">*Choose a costumer</label>
+            <div>
+                @Html.DropDownListFor(m => m.CostumerId, new SelectList(ViewBag.Costumer, "CostumerId", "CostumerName"), new { @class = "form-control" })
+            </div>
+            <div>
+                <br />
+                <button type="submit" formmethod="post">ADD</button>
+            </div>
+        }
+    </div>
+</div>
+
+<div>
+    <a href="index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

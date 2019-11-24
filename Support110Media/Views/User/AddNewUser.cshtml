@@ -1,0 +1,43 @@
+﻿@model Support110Media.Data.Model.UserModel
+
+@{
+    ViewData["Title"] = "AddNewUser";
+}
+
+<h2>Add New User</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("AddNewUser", "User", FormMethod.Post))
+        {
+            <label class="control-label">User Name</label>
+            <div>
+                @Html.TextBoxFor(u => u.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+            </div>
+            <label class="control-label">Password</label>
+            <div>
+                @Html.TextBoxFor(u => u.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "test-danger" })
+            </div>
+            <label class="control-label">Mail Address</label>
+            <div>
+                @Html.TextBoxFor(u => u.MailAddress, new { @class = "form-control" })
+                @Html.ValidationMessageFor(u => u.MailAddress, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                <br />
+                <button type="submit" formmethod="post">ADD</button>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<div>
+    <a href="User/Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

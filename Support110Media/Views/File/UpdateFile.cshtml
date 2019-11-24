@@ -1,0 +1,44 @@
+﻿@model Support110Media.Data.Model.FileModel
+
+@{
+    ViewData["Title"] = "UpdateFile";
+}
+
+<h2>Update File</h2>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("EditFile", "File", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => m.FileId, new { @placeholder = ViewBag.File.FileId })
+            <label>File Name</label>
+            @Html.TextBoxFor(m => m.FileName, new { @placeholder = ViewBag.File.FileName, @class = "form-control" })
+            <br />
+            <label>File Upload Date</label>
+            @Html.TextBoxFor(m => m.FileUploadDate, new { @placeholder = ViewBag.File.FileUploadDate, @class = "form-control" })
+            <br />
+            <label>Call Date</label>
+            @Html.TextBoxFor(m => m.CallDate, new { @placeholder = ViewBag.File.CallDate, @class = "form-control" })
+            <br />
+            <label>Call Time</label>
+            @Html.TextBoxFor(m => m.CallTime, new { @placeholder = ViewBag.File.CallTime, @class = "form-control" })
+            <br />
+            <label>Costumer</label>
+            <div>
+                @Html.DropDownListFor(m => m.CostumerId, new SelectList(ViewBag.Costumers, "CostumerId", "CostumerName"), new { @class = "form-control" })
+            </div>
+            <br />
+            <input type="submit" value="Edit" class="btn btn-default" />
+            <br />
+        }
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

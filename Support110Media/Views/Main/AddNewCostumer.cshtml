@@ -1,0 +1,68 @@
+﻿@model Support110Media.Data.Model.CostumerModel
+
+@{
+    ViewData["Title"] = "Add New Costumer";
+}
+
+<h2>Add New Costumer</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("AddNewCostumer", "Main", FormMethod.Post))
+        {
+            <label class="control-label">Costumer Name</label>
+            <div>
+                @Html.TextBoxFor(m => m.CostumerName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CostumerName, "", new { @class = "text-danger" })
+            </div>
+            <label class="control-label">Costumer Surname</label>
+            <div>
+                @Html.TextBoxFor(m => m.CostumerSurname, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CostumerSurname, "", new { @class = "text-danger" })
+            </div>
+            <label class="control-label">Costumer Phone Number</label>
+            <div>
+                @Html.TextBoxFor(m => m.CostumerPhoneNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CostumerPhoneNumber, "", new { @class = "text-danger" })
+            </div>
+            <label class="control-label">Costumer Addreess</label>
+            <div>
+                @Html.TextBoxFor(m => m.CostumerAddreess, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CostumerAddreess, "", new { @class = "text-danger" })
+            </div>
+            <label class="control-label">Costumer Type</label>
+            <div>
+                @Html.TextBoxFor(m => m.CostumerType, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CostumerType, "", new { @class = "text-danger" })
+            </div>
+            <label class="control-label">Costumer Mail Address</label>
+            <div>
+                @Html.TextBoxFor(m => m.CostumerMailAddress, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CostumerMailAddress, "", new { @class = "text-danger" })
+            </div>
+            <label class="control-label">Costumer Password</label>
+            <div>
+                @Html.TextBoxFor(m => m.CostumerPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CostumerPassword, "", new { @class = "text-danger" })
+            </div>
+            <label class="control-label">CompanyName</label>
+            <div>
+                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                <br />
+                <button type="submit" formmethod="post">ADD COSTUMER</button>
+            </div>
+        }
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
