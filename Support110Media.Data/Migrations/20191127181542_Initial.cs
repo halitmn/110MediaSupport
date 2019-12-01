@@ -12,14 +12,14 @@ namespace Support110Media.Data.Migrations
                 {
                     CostumerId = table.Column<int>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
-                    CostumerName = table.Column<string>(nullable: true),
-                    CostumerSurname = table.Column<string>(nullable: true),
+                    CostumerName = table.Column<string>(nullable: false),
+                    CostumerSurname = table.Column<string>(nullable: false),
                     CostumerPhoneNumber = table.Column<string>(nullable: true),
                     CostumerAddreess = table.Column<string>(nullable: true),
                     CostumerType = table.Column<string>(nullable: true),
                     CostumerMailAddress = table.Column<string>(nullable: true),
-                    CostumerPassword = table.Column<string>(nullable: true),
-                    CompanyName = table.Column<string>(nullable: true)
+                    CostumerPassword = table.Column<string>(nullable: false),
+                    CompanyName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,10 +47,11 @@ namespace Support110Media.Data.Migrations
                 {
                     FileId = table.Column<int>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
-                    FileName = table.Column<string>(nullable: true),
-                    FileUploadDate = table.Column<string>(nullable: true),
-                    CallDate = table.Column<string>(nullable: true),
-                    CallTime = table.Column<string>(nullable: true),
+                    FileName = table.Column<string>(nullable: false),
+                    FilePath = table.Column<string>(nullable: false),
+                    FileUploadDate = table.Column<string>(nullable: false),
+                    CallDate = table.Column<string>(nullable: false),
+                    CallTime = table.Column<string>(nullable: false),
                     CostumerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

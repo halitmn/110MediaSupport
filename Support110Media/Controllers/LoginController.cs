@@ -52,12 +52,13 @@ namespace Support110Media.Controllers
         /// </summary>
         /// <param name="loginModel"></param>
         /// <returns></returns>
+        [HttpPost]
         public async Task<IActionResult> LogIn(Data.Model.LoginModel loginModel)
         {
             using (var uow = new UnitOfWork(masterContext))
             {
-                if (Environment.GetEnvironmentVariable("USER_NAME")==loginModel.UserName
-                    && Environment.GetEnvironmentVariable("PASSWORD")==loginModel.Password)
+                if (Environment.GetEnvironmentVariable("USER_NAME") == loginModel.UserName
+                    && Environment.GetEnvironmentVariable("PASSWORD") == loginModel.Password)
                 {
                     var claims = new List<Claim>
                     {
@@ -65,9 +66,9 @@ namespace Support110Media.Controllers
                     };
                     var userIdentity = new ClaimsIdentity(claims, "admin");
                     ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(userIdentity);
-                    HttpContext.Session.SetString("admin",JsonConvert.SerializeObject(loginModel));
+                    HttpContext.Session.SetString("admin", JsonConvert.SerializeObject(loginModel));
                     await HttpContext.SignInAsync(claimsPrincipal);
-                    return RedirectToAction("Index","Main");
+                    return RedirectToAction("Index", "Main");
                 }
                 var costumerList = uow.GetRepository<CostumerModel>().GetAll();
                 foreach (var costumer in costumerList)
@@ -85,7 +86,6 @@ namespace Support110Media.Controllers
                         return RedirectToAction("SupportIndex", "Support");
                     }
                 }
-
                 var userList = uow.GetRepository<UserModel>().GetAll();
                 foreach (var user in userList)
                 {
@@ -99,14 +99,13 @@ namespace Support110Media.Controllers
                         ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(userIdentity);
                         HttpContext.Session.SetString("user", JsonConvert.SerializeObject(user));
                         await HttpContext.SignInAsync(claimsPrincipal);
-                        return RedirectToAction("Index", "Costumer");
+                        return RedirectToAction("Index", "Main");
                     }
                 }
-                
-                return View();
+                return RedirectToAction("LoginIndex", "Login");
             }
         }
-        
+
         /// <summary>
         /// uygulamadan çıkış yapar
         /// </summary>
@@ -115,7 +114,7 @@ namespace Support110Media.Controllers
         {
             HttpContext.Session.Clear();
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Index", "Main");
+            return RedirectToAction("LoginIndex", "Login");
         }
 
         #endregion

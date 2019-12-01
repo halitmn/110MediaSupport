@@ -8,7 +8,7 @@ using Support110Media.Data.Context;
 namespace Support110Media.Data.Migrations
 {
     [DbContext(typeof(MasterContext))]
-    [Migration("20191124164939_Initial")]
+    [Migration("20191127181542_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,19 +22,23 @@ namespace Support110Media.Data.Migrations
                     b.Property<int>("CostumerId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CompanyName");
+                    b.Property<string>("CompanyName")
+                        .IsRequired();
 
                     b.Property<string>("CostumerAddreess");
 
                     b.Property<string>("CostumerMailAddress");
 
-                    b.Property<string>("CostumerName");
+                    b.Property<string>("CostumerName")
+                        .IsRequired();
 
-                    b.Property<string>("CostumerPassword");
+                    b.Property<string>("CostumerPassword")
+                        .IsRequired();
 
                     b.Property<string>("CostumerPhoneNumber");
 
-                    b.Property<string>("CostumerSurname");
+                    b.Property<string>("CostumerSurname")
+                        .IsRequired();
 
                     b.Property<string>("CostumerType");
 
@@ -48,15 +52,22 @@ namespace Support110Media.Data.Migrations
                     b.Property<int>("FileId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CallDate");
+                    b.Property<string>("CallDate")
+                        .IsRequired();
 
-                    b.Property<string>("CallTime");
+                    b.Property<string>("CallTime")
+                        .IsRequired();
 
                     b.Property<int>("CostumerId");
 
-                    b.Property<string>("FileName");
+                    b.Property<string>("FileName")
+                        .IsRequired();
 
-                    b.Property<string>("FileUploadDate");
+                    b.Property<string>("FilePath")
+                        .IsRequired();
+
+                    b.Property<string>("FileUploadDate")
+                        .IsRequired();
 
                     b.HasKey("FileId");
 

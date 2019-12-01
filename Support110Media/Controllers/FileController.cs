@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,20 +7,27 @@ using Support110Media.Data.Context;
 using Support110Media.Data.Model;
 using Support110Media.DataAccess.UnitOfWork;
 using Support110Media.Helper;
+using System.Web;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using System.Text;
 
 namespace Support110Media.Controllers
 {
     /// <summary>
     /// File backend
     /// </summary>
-    [Authorize,AuthFilter]
+    [Authorize, AuthFilter]
     public class FileController : Controller
     {
         #region Constructor
 
-        public FileController(MasterContext context)
+        public FileController(MasterContext context, IHostingEnvironment env)
         {
             masterContext = context;
+            wwwrootPath = env.WebRootPath;
         }
 
         #endregion
@@ -27,6 +35,7 @@ namespace Support110Media.Controllers
         #region Member
 
         private MasterContext masterContext;
+        private string wwwrootPath;
 
         #endregion
 
@@ -70,12 +79,34 @@ namespace Support110Media.Controllers
         /// <param name="fileModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult AddNewFile(FileModel fileModel)
+        public async Task<IActionResult> AddNewFile(FileModel fileModel, IFormFile file)
         {
-            using (UnitOfWork unitOfWork = new UnitOfWork(masterContext))
+
+            if (file != null && file.Length != 0)
             {
-                unitOfWork.GetRepository<FileModel>().Add(fileModel);
-                unitOfWork.SaveChanges();
+                var path = wwwrootPath + @"\AudioFileUploaded\" + file.FileName;
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                    var splitPath = path.Split("\\");
+                    path = string.Empty;
+                    for (int i = splitPath.Length; i > 0; i--)
+                    {
+                        path = splitPath[i - 2].ToString() + "/" + splitPath[i - 1].ToString();
+                        break;
+                    }
+                    int index = file.FileName.IndexOf('.');
+                    string fileName = file.FileName.Substring(0, index);
+                    using (UnitOfWork unitOfWork = new UnitOfWork(masterContext))
+                    {
+                        fileModel.FileName = fileName;
+                        fileModel.FileUploadDate = DateTime.Now.ToShortDateString();
+                        fileModel.FilePath = Environment.GetEnvironmentVariable("URI") + path;
+                        unitOfWork.GetRepository<FileModel>().Add(fileModel);
+                        unitOfWork.SaveChanges();
+                    }
+                }
+                return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
         }

@@ -10,31 +10,29 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        @using (Html.BeginForm("EditFile", "File", FormMethod.Post))
+        @using (Html.BeginForm("UpdateFile", "File", FormMethod.Post))
         {
-            @Html.HiddenFor(m => m.FileId, new { @placeholder = ViewBag.File.FileId })
-            <label>File Name</label>
-            @Html.TextBoxFor(m => m.FileName, new { @placeholder = ViewBag.File.FileName, @class = "form-control" })
-            <br />
-            <label>File Upload Date</label>
-            @Html.TextBoxFor(m => m.FileUploadDate, new { @placeholder = ViewBag.File.FileUploadDate, @class = "form-control" })
-            <br />
-            <label>Call Date</label>
-            @Html.TextBoxFor(m => m.CallDate, new { @placeholder = ViewBag.File.CallDate, @class = "form-control" })
-            <br />
-            <label>Call Time</label>
-            @Html.TextBoxFor(m => m.CallTime, new { @placeholder = ViewBag.File.CallTime, @class = "form-control" })
-            <br />
+            <input id="FileId" name="FileId" type="hidden" value="@ViewBag.File.FileId">
+            <input class="form-control" id="FileName" name="FileName" type="hidden" value="@ViewBag.File.FileName">
+
+            <input id="FileId" name="FileUploadDate" type="hidden" value="@ViewBag.File.FileUploadDate">
+
+            <label class="control-label">Call Date</label>
+            <input class="form-control" id="CallDate" name="CallDate" type="text" value="@ViewBag.File.CallDate">
+
+            <label class="control-label">Call Time</label>
+            <input class="form-control" id="CallTime" name="CallTime" type="text" value="@ViewBag.File.CallTime">
             <label>Costumer</label>
             <div>
                 @Html.DropDownListFor(m => m.CostumerId, new SelectList(ViewBag.Costumers, "CostumerId", "CostumerName"), new { @class = "form-control" })
             </div>
             <br />
-            <input type="submit" value="Edit" class="btn btn-default" />
+            <input type="submit" value="EDIT" class="btn btn-default" />
             <br />
         }
     </div>
 </div>
+<br />
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

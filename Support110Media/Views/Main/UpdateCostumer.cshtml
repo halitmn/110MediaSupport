@@ -11,53 +11,34 @@
     <div class="col-md-4">
         @using (Html.BeginForm("UpdateCostumer", "Main", FormMethod.Post))
         {
-            <b> @Html.ValidationSummary("*Marked fields need to be entered !", new { @class = "text-danger" }) </b>
-            <div>
-                @Html.HiddenFor(m => m.CostumerId, new { @placeholder = ViewBag.Costumer.CostumerId })
-            </div>
-            <label class="control-label">*Costumer Name</label>
-            <div>
-                @Html.TextBoxFor(m => m.CostumerName, new { @placeholder = ViewBag.Costumer.CostumerId, @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.CostumerName, "", new { @class = "text-danger" })
-            </div>
-            <label class="control-label">*Costumer Surname</label>
-            <div>
-                @Html.TextBoxFor(m => m.CostumerSurname, new { @placeholder = ViewBag.Costumer.CostumerSurname, @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.CostumerSurname, "", new { @class = "text-danger" })
-            </div>
-            <label class="control-label">*Costumer Surname</label>
-            <div>
-                @Html.TextBoxFor(m => m.CostumerPhoneNumber, new { @placeholder = ViewBag.Costumer.CostumerPhoneNumber, @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.CostumerPhoneNumber, "", new { @class = "text-danger" })
-            </div>
-            <label class="control-label">*Costumer Addreess</label>
-            <div>
-                @Html.TextBoxFor(m => m.CostumerAddreess, new { @placeholder = ViewBag.Costumer.CostumerAddreess, @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.CostumerAddreess, "", new { @class = "text-danger" })
-            </div>
-            <label class="control-label">*Costumer Type</label>
-            <div>
-                @Html.TextBoxFor(m => m.CostumerType, new { @placeholder = ViewBag.Costumer.CostumerType, @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.CostumerType, "", new { @class = "text-danger" })
-            </div>
-            <label class="control-label">*Costumer Mail Addreess</label>
-            <div>
-                @Html.TextBoxFor(m => m.CostumerMailAddress, new { @placeholder = ViewBag.Costumer.CostumerMailAddress, @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.CostumerMailAddress, "", new { @class = "text-danger" })
-            </div>
-            <label class="control-label">*Costumer Password</label>
-            <div>
-                @Html.TextBoxFor(m => m.CostumerPassword, new { @placeholder = ViewBag.Costumer.CostumerPassword, @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.CostumerPassword, "", new { @class = "text-danger" })
-            </div>
-            <label class="control-label">*Company Name</label>
-            <div>
-                @Html.TextBoxFor(m => m.CompanyName, new { @placeholder = ViewBag.Costumer.CompanyName, @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save Edit" class="btn btn-default" />
-            </div>
+
+            <input id="CostumerId" name="CostumerId" type="hidden" value="@ViewBag.Costumer.CostumerId">
+            <label class="control-label">Costumer Name</label>
+            <input class="form-control" id="CostumerName" name="CostumerName" type="text" value="@ViewBag.Costumer.CostumerName">
+
+            <label class="control-label">Costumer Surname</label>
+            <input class="form-control" id="CostumerSurname" name="CostumerSurname" type="text" value="@ViewBag.Costumer.CostumerSurname">
+
+            <label class="control-label">Costumer PhoneNumber</label>
+            <input class="form-control" id="CostumerPhoneNumber" name="CostumerPhoneNumber" type="text" value="@ViewBag.Costumer.CostumerPhoneNumber">
+
+            <label class="control-label">Costumer Addreess</label>
+            <input class="form-control" id="CostumerAddreess" name="CostumerAddreess" type="text" value="@ViewBag.Costumer.CostumerAddreess">
+
+            <label class="control-label">Costumer Type</label>
+            <input class="form-control" id="CostumerType" name="CostumerType" type="text" value="@ViewBag.Costumer.CostumerType">
+
+            <label class="control-label">CostumerMailAddress</label>
+            <input class="form-control" id="CostumerMailAddress" name="CostumerMailAddress" type="text" value="@ViewBag.Costumer.CostumerMailAddress">
+
+            <label class="control-label">CostumerPassword</label>
+            <input class="form-control" id="CostumerPassword" name="CostumerPassword" type="text" value="@ViewBag.Costumer.CostumerPassword">
+
+            <label class="control-label">Company Name</label>
+            <input class="form-control" id="CompanyName" name="CompanyName" type="text" value="@ViewBag.Costumer.CompanyName">
+            <br />
+            <input type="submit" value="EDIT" class="btn btn-default" />
+            <br />
         }
     </div>
 </div>

@@ -15,10 +15,16 @@
         "MAIL_PORT": "587",
         "MAIL_PASSWORD": "sgkupdater123",
         "MAIL_IP": "smtp.gmail.com",
+        "MYSQL_PORT": "3306",
+        "MYSQL_DB": "costumersupport",
+        "MYSQL_USER": "halit",
         "MAIL_ADDRESS": "sgkupdater@gmail.com",
         "USER_NAME": "admin",
+        "MYSQL_HOST": "localhost",
         "ASPNETCORE_ENVIRONMENT": "Development",
         "MAIL_HOST": "smtp",
+        "MYSQL_PASS": "123456",
+        "URI": "https://localhost:44383/",
         "PASSWORD": "admintoor"
       }
     },

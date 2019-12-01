@@ -17,7 +17,7 @@ namespace Support110Media.Utils.Helper
         /// <returns></returns>
         public static string Md5Encrypt(string value)
         {
-            if (!String.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(value))
             {
                 string val = String.Empty;
                 MD5CryptoServiceProvider md5Cyripto = new MD5CryptoServiceProvider();
@@ -39,7 +39,7 @@ namespace Support110Media.Utils.Helper
 
         public static void SendMail(string mailAddress)
         {
-            string url = "https://110media.net/support/supportIndex";
+            string url = Environment.GetEnvironmentVariable("URI") + "Support/SupportIndex";
             try
             {
                 SmtpClient smtpClient = new SmtpClient();
@@ -69,7 +69,7 @@ namespace Support110Media.Utils.Helper
             }
             catch (Exception ex)
             {
-
+                Log.Logger.Error(ex, "MailSend");
             }
         }
     }
