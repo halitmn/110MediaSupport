@@ -9,16 +9,39 @@ using System.Linq;
 
 namespace Support110Media.Controllers
 {
+    /// <summary>
+    /// Support Backend
+    /// </summary>
     [Authorize]
     public class SupportController : Controller
     {
+        #region Constructor
+
         public SupportController(MasterContext masterContext)
         {
             this.masterContext = masterContext;
         }
+
+        #endregion
+
+        #region Member
+
+        /// <summary>
+        /// Müşteri Model
+        /// </summary>
         private CostumerModel costumer;
+
+        /// <summary>
+        /// Context nesnesi
+        /// </summary>
         private MasterContext masterContext;
 
+        #endregion
+
+        /// <summary>
+        /// Müşteri Sayfasını döner. Müşteri giriş yapmışsa müşterilerin kayıtlarını çekip döner
+        /// </summary>
+        /// <returns></returns>
         public IActionResult SupportIndex()
         {
             var costumerSession = HttpContext.Session.GetString("costumer");
@@ -38,7 +61,7 @@ namespace Support110Media.Controllers
                     var fileList = unitofWork.GetRepository<FileModel>().GetAll().ToList();
                     return View(fileList);
                 }
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("LoginIndex", "Login");
             }
         }
     }

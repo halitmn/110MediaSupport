@@ -36,7 +36,10 @@ namespace Support110Media.Utils.Helper
             return null;
         }
 
-
+        /// <summary>
+        /// Mail Gönderir
+        /// </summary>
+        /// <param name="mailAddress"></param>
         public static void SendMail(string mailAddress)
         {
             string url = Environment.GetEnvironmentVariable("URI") + "Support/SupportIndex";
@@ -53,7 +56,7 @@ namespace Support110Media.Utils.Helper
                 MimeMessage message = new MimeMessage();
                 message.From.Add(new MailboxAddress("110 Media ", Environment.GetEnvironmentVariable("MAIL_ADDRESS")));
                 message.To.Add(new MailboxAddress(mailAddress));
-                message.Subject = "110 Media Support Lead Generation";
+                message.Subject = "110 Media Support";
 
                 BodyBuilder bodyBuilder = new BodyBuilder();
 

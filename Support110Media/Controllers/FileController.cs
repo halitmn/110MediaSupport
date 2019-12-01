@@ -7,12 +7,11 @@ using Support110Media.Data.Context;
 using Support110Media.Data.Model;
 using Support110Media.DataAccess.UnitOfWork;
 using Support110Media.Helper;
-using System.Web;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using System.Text;
+using Support110Media.Utils.Log;
 
 namespace Support110Media.Controllers
 {
@@ -47,16 +46,24 @@ namespace Support110Media.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            var fileModelList = new List<FileModel>();
-            using (UnitOfWork unitOfWork = new UnitOfWork(masterContext))
+            try
             {
-                fileModelList = unitOfWork.GetRepository<FileModel>().GetAll().ToList();
-                foreach (var item in fileModelList)
+                var fileModelList = new List<FileModel>();
+                using (UnitOfWork unitOfWork = new UnitOfWork(masterContext))
                 {
-                    item.CostumerModel = unitOfWork.GetRepository<CostumerModel>().GetById(item.CostumerId);
+                    fileModelList = unitOfWork.GetRepository<FileModel>().GetAll().ToList();
+                    foreach (var item in fileModelList)
+                    {
+                        item.CostumerModel = unitOfWork.GetRepository<CostumerModel>().GetById(item.CostumerId);
+                    }
                 }
+                return View(fileModelList);
             }
-            return View(fileModelList);
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "FileIndex");
+                return Content("Error");
+            }
         }
 
         /// <summary>
@@ -81,34 +88,44 @@ namespace Support110Media.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewFile(FileModel fileModel, IFormFile file)
         {
-
-            if (file != null && file.Length != 0)
+            try
             {
-                var path = wwwrootPath + @"\AudioFileUploaded\" + file.FileName;
-                using (var stream = new FileStream(path, FileMode.Create))
+                if (file != null && file.Length != 0)
                 {
-                    await file.CopyToAsync(stream);
-                    var splitPath = path.Split("\\");
-                    path = string.Empty;
-                    for (int i = splitPath.Length; i > 0; i--)
+                    var path = wwwrootPath + @"\AudioFileUploaded\" + file.FileName;
+                    Logger.Info(path);
+                    using (var stream = new FileStream(path, FileMode.Create))
                     {
-                        path = splitPath[i - 2].ToString() + "/" + splitPath[i - 1].ToString();
-                        break;
+                        await file.CopyToAsync(stream);
+                        var splitPath = path.Split("\\");
+                        path = string.Empty;
+                        for (int i = splitPath.Length; i > 0; i--)
+                        {
+                            path = splitPath[i - 2].ToString() + "/" + splitPath[i - 1].ToString();
+                            break;
+                        }
+                        Logger.Info(path);
+                        Logger.Info(Environment.GetEnvironmentVariable("URI") + path);
+                        int index = file.FileName.IndexOf('.');
+                        string fileName = file.FileName.Substring(0, index);
+                        using (UnitOfWork unitOfWork = new UnitOfWork(masterContext))
+                        {
+                            fileModel.FileName = fileName;
+                            fileModel.FileUploadDate = DateTime.Now.ToShortDateString();
+                            fileModel.FilePath = Environment.GetEnvironmentVariable("URI") + path;
+                            unitOfWork.GetRepository<FileModel>().Add(fileModel);
+                            unitOfWork.SaveChanges();
+                        }
                     }
-                    int index = file.FileName.IndexOf('.');
-                    string fileName = file.FileName.Substring(0, index);
-                    using (UnitOfWork unitOfWork = new UnitOfWork(masterContext))
-                    {
-                        fileModel.FileName = fileName;
-                        fileModel.FileUploadDate = DateTime.Now.ToShortDateString();
-                        fileModel.FilePath = Environment.GetEnvironmentVariable("URI") + path;
-                        unitOfWork.GetRepository<FileModel>().Add(fileModel);
-                        unitOfWork.SaveChanges();
-                    }
+                    return RedirectToAction("Index");
                 }
                 return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "FileUpload");
+                return Content("Error");
+            }
         }
 
         /// <summary>
@@ -118,12 +135,21 @@ namespace Support110Media.Controllers
         /// <returns></returns>
         public IActionResult DeleteFile(int id)
         {
-            using (var unitOfWork = new UnitOfWork(masterContext))
+            try
             {
-                unitOfWork.GetRepository<FileModel>().Delete(id);
-                unitOfWork.SaveChanges();
+                using (var unitOfWork = new UnitOfWork(masterContext))
+                {
+                    unitOfWork.GetRepository<FileModel>().Delete(id);
+                    unitOfWork.SaveChanges();
+                }
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "DeleteFile");
+                return Content("Error");
+            }
+
         }
 
         /// <summary>
@@ -149,12 +175,20 @@ namespace Support110Media.Controllers
         [HttpPost]
         public IActionResult UpdateFile(FileModel fileModel)
         {
-            using (UnitOfWork unitofwork = new UnitOfWork(masterContext))
+            try
             {
-                unitofwork.GetRepository<FileModel>().Update(fileModel);
-                unitofwork.SaveChanges();
+                using (UnitOfWork unitofwork = new UnitOfWork(masterContext))
+                {
+                    unitofwork.GetRepository<FileModel>().Update(fileModel);
+                    unitofwork.SaveChanges();
+                }
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "UpdateFile(FileModel)");
+                return Content("Error");
+            }
         }
 
         #endregion

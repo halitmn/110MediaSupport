@@ -1,0 +1,41 @@
+version: '3.4'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+ #    MYSQL_DATABASE: 'gateway'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'toor'
+      MYSQL_ROOT_PASSWORD: 'toor'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+ #   volumes:
+ #     - ../mysql_volume:/var/lib/mysql
+  support:
+    build: 
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - "9090:80"
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: '3306'
+      MYSQL_DB: 'support'
+      MYSQL_USER: 'root'
+      MYSQL_PASS: 'toor'
+      ASPNETCORE_URLS: 'http://*:80/'
+      MAIL_PORT: '587'
+      MAIL_PASSWORD: 'sgkupdater123'
+      MAIL_IP: 'smtp.gmail.com'
+      MAIL_ADDRESS: 'sgkupdater@gmail.com'
+      MAIL_HOST: 'smtp'
+      USER_NAME: 'admin'
+      PASSWORD: 'admintoor'
+      URI: 'https://localhost:9090/'
+    depends_on:
+      - db
+    links:
+      - db

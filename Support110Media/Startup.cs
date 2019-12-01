@@ -6,11 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Support110Media.Data.Context;
 using Support110Media.Utils.Log;
 using System;
-using System.IO;
+using System.Threading;
 
 namespace Support110Media
 {
@@ -29,13 +28,17 @@ namespace Support110Media
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false; //CookieOnayı
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddSession();
+            services.AddSession(opts =>
+            {
+                opts.IdleTimeout = TimeSpan.FromMinutes(30);
+                opts.Cookie.IsEssential = false; // oturum tanımlama 
+            });
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
-                options.LoginPath = "/Login/LogIn";
+                options.LoginPath = "/Login/LoginIndex";
                 options.LogoutPath = "/Login/LogOut";
             });
             services.AddDbContext<MasterContext>(op => op.UseMySQL(string.Format
@@ -48,11 +51,10 @@ namespace Support110Media
 
             //services.AddDbContext<MasterContext>(options =>
             //                      options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddSingleton<IFileProvider>(
-            //new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "AudioFileUploaded"),
-            //                Microsoft.Extensions.FileProviders.Physical.ExclusionFilters.None));
 
-
+            
+            services.AddDistributedMemoryCache();
+            services.AddHttpContextAccessor(); //controller dışında sessionu okumak ve yazmak için
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,12 +71,13 @@ namespace Support110Media
             }
             Logger.Configure();
             Logger.Info("Application Started.");
+            Thread.Sleep(TimeSpan.FromSeconds(30));
             masterContext.Database.Migrate();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
-            app.UseSession();
+            app.UseCookiePolicy();            
             app.UseAuthentication();
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

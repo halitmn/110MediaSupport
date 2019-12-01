@@ -121,6 +121,11 @@ namespace Support110Media.Controllers
             return RedirectToAction("Index");
         }
         
+        /// <summary>
+        /// Mail gönderir
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult SendMail(int id)
         {
             using (UnitOfWork unitOfWork = new UnitOfWork(context))
